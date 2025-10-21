@@ -3,5 +3,7 @@ WORKDIR /app
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 COPY main.py ./
+RUN mkdir -p /app/static/resumes
+ENV FILE_BASE=/app/static/resumes
 EXPOSE 8000
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
