@@ -1,9 +1,20 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 from typing import List, Optional
+from fastapi.middleware.cors import CORSMiddleware
+import os
 import re
 
 app = FastAPI(title="Matcher API", version="0.1.0")
+
+origins = [o.strip() for o in os.getenv("ALLOWED_ORIGINS","*").split(",")]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 class MatchRequest(BaseModel):
     jd_text: str
